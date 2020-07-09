@@ -1,0 +1,4 @@
+[submodule "NFD"]
+	url = https://github.com/gtorresz/NFD
+[submodule "ndn-cxx"]
+	url = https://github.com/gtorresz/ndn-cxx
