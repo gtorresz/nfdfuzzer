@@ -26,7 +26,7 @@ extern "C" {
 ATTRIBUTE_INTERFACE int main(int argc, char **argv) {
     std::thread t1(SetUp);
     struct timeval t;
-    t.tv_sec = 2;
+    t.tv_sec = 10;
     t.tv_usec = 500000;
     select(0, NULL, NULL, NULL, &t);
   return fuzzer::FuzzerDriver(&argc, &argv, LLVMFuzzerTestOneInput);
