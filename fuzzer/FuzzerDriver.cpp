@@ -78,6 +78,10 @@ static const FlagDescription FlagDescriptions [] {
 #undef FUZZER_FLAG_STRING
 };
 
+extern "C" {
+  void initializeSeed(unsigned Seed);
+}  
+
 static const size_t kNumFlags =
     sizeof(FlagDescriptions) / sizeof(FlagDescriptions[0]);
 
@@ -732,11 +736,9 @@ int FuzzerDriver(int *argc, char ***argv, UserCallback Callback) {
   unsigned Seed = Flags.seed;
   // Initialize Seed.
   if (Seed == 0)
-    Seed =
-        std::chrono::system_clock::now().time_since_epoch().count() + GetPid();
+    Seed = std::chrono::system_clock::now().time_since_epoch().count() + GetPid();
   if (Flags.verbosity)
     Printf("INFO: Seed: %u\n", Seed);
-
   if (Flags.collect_data_flow && !Flags.fork && !Flags.merge) {
     if (RunIndividualFiles)
       return CollectDataFlow(Flags.collect_data_flow, Flags.data_flow_trace,
@@ -843,6 +845,7 @@ int FuzzerDriver(int *argc, char ***argv, UserCallback Callback) {
   }
 
   auto CorporaFiles = ReadCorpora(*Inputs, ParseSeedInuts(Flags.seed_inputs));
+  initializeSeed(Seed);
   F->Loop(CorporaFiles);
 
   if (Flags.verbosity)
