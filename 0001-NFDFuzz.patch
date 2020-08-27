@@ -1,0 +1,60 @@
+From 15ba9004cc7ef01b74f78bfcf9a26c1e7958fa43 Mon Sep 17 00:00:00 2001
+From: George <gtorresz15@yahoo.com>
+Date: Wed, 26 Aug 2020 12:52:06 -0600
+Subject: [PATCH] NFDFuzz
+
+---
+ compiler-rt/lib/fuzzer/FuzzerDriver.cpp | 5 +++++
+ compiler-rt/lib/fuzzer/FuzzerMain.cpp   | 8 +++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/compiler-rt/lib/fuzzer/FuzzerDriver.cpp b/compiler-rt/lib/fuzzer/FuzzerDriver.cpp
+index 4669b12786f..19469b8a780 100644
+--- a/compiler-rt/lib/fuzzer/FuzzerDriver.cpp
++++ b/compiler-rt/lib/fuzzer/FuzzerDriver.cpp
+@@ -83,6 +83,10 @@ static const FlagDescription FlagDescriptions [] {
+ #undef FUZZER_FLAG_STRING
+ };
+ 
++extern "C" {
++   void initializeSeed(unsigned Seed);
++}
++
+ static const size_t kNumFlags =
+     sizeof(FlagDescriptions) / sizeof(FlagDescriptions[0]);
+ 
+@@ -877,6 +881,7 @@ int FuzzerDriver(int *argc, char ***argv, UserCallback Callback) {
+   }
+ 
+   auto CorporaFiles = ReadCorpora(*Inputs, ParseSeedInuts(Flags.seed_inputs));
++  initializeSeed(Seed);
+   F->Loop(CorporaFiles);
+ 
+   if (Flags.verbosity)
+diff --git a/compiler-rt/lib/fuzzer/FuzzerMain.cpp b/compiler-rt/lib/fuzzer/FuzzerMain.cpp
+index 75f2f8e75c9..ba8c3828f69 100644
+--- a/compiler-rt/lib/fuzzer/FuzzerMain.cpp
++++ b/compiler-rt/lib/fuzzer/FuzzerMain.cpp
+@@ -10,12 +10,18 @@
+ 
+ #include "FuzzerDefs.h"
+ #include "FuzzerPlatform.h"
++#include <thread>
+ 
+ extern "C" {
+ // This function should be defined by the user.
+ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size);
+ }  // extern "C"
+ 
++extern "C" {
++   void SetUp();
++}  // extern "C"
++
+ ATTRIBUTE_INTERFACE int main(int argc, char **argv) {
+-  return fuzzer::FuzzerDriver(&argc, &argv, LLVMFuzzerTestOneInput);
++   std::thread t1(SetUp);
++   return fuzzer::FuzzerDriver(&argc, &argv, LLVMFuzzerTestOneInput);
+ }
+-- 
+2.25.1
+
