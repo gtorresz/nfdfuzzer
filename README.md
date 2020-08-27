@@ -27,7 +27,7 @@ A script, runFuzzer.sh, is provided so that the fuzzer may be run easily. Inside
 Inside of the coverage folder there is a script, covGathering.sh, available for gathering coverage data from preivously run instances of the fuzzer. 
 
 ## Altering NFDFuzz
-Inputs are in flatbuffer format, the descriptons for these formats are stored in, "NFD/daemon/fuzzer/util". You can make changes to the existing .fbs files or add your own. Whenever this is done run flatc inside of this folder to generate the appropriate header files for the fuzzer. If new .fbs files where created include the newly generated header files should be included inside of nfd\_runner.hpp located inside the fuzzer folder of NFD.
+Inputs are in flatbuffer format, the descriptons for these formats are stored in, "NFD/daemon/fuzzer/util". You can make changes to the existing .fbs files or add your own. Whenever this is done run flatc inside of this folder to generate the appropriate header files for the fuzzer. If new .fbs files where created the newly generated header files should be included inside of nfd\_runner.hpp located inside the fuzzer folder of NFD.
 
 Other modifications can be done inside the mutator functions or the fuzzer.cpp file, which are all located inside the fuzzer folder. 
 
