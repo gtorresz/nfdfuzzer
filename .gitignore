@@ -4,3 +4,4 @@ FuzzerTrace/*.csv
 default*
 *.profdata
 *.profraw
+MY_CORPUS/*
