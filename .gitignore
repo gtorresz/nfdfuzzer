@@ -2,3 +2,5 @@
 *.a
 FuzzerTrace/*.csv
 default*
+*.profdata
+*.profraw

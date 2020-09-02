@@ -1,2 +1,4 @@
 #!/bin/bash
-sudo ./NFD/build/daemon/fuzzer/fuzzer
+mkdir MY_CORPUS
+mkdir FuzzerTrace
+sudo ./NFD/build/daemon/fuzzer/fuzzer MY_CORPUS -max_len=16184 
