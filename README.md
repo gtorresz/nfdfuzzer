@@ -50,11 +50,11 @@ LLVM is currently installed both from distribution and from source. This is due 
 The patch can be applied to the llvm source and then the script to make the library can be found at llvm-project/compiler-rt/lib/fuzzer/build.sh.
 
 If there is some trouble getting the correct cmake version follow these steps :
-   -sudo apt-get update
-   -sudo apt-get install apt-transport-https ca-certificates gnupg \
-                         software-properties-common wget
-   -wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc |
-       sudo apt-key add -
--For Ubuntu Bionic Beaver (18.04):
-   -sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
-   -sudo apt-get update
+   - sudo apt-get update
+   - sudo apt-get install apt-transport-https ca-certificates gnupg \ software-properties-common wget
+   - wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+
+For Ubuntu Bionic Beaver (18.04):
+
+   - sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+   - sudo apt-get update
